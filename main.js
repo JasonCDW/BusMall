@@ -1,8 +1,6 @@
 let carImageArray = [];
 
-// let img1 = document.getElementById('image1');
-// let img2 = document.getElementById('image2');
-// let img3 = document.getElementById('image3');
+let elChart = document.getElementById("myChart").getContext('2d');
 let elImageContainer = document.getElementById('image-container');
 
 
@@ -16,18 +14,36 @@ let CarImage = function(modelOfCar, makeOfCar, filePath, id) {
     this.addClicks;
 };
 
+if(localStorage.length > 0) {
+    let getData = localStorage.getItem('storageCarImgArray');
+    carImageArray = JSON.parse(getData);
+} else {
 let Pista = new CarImage("488 Pista", "Ferrari", "./assets/488pista.jpg", 'pista');
-let AventadorSVJ = new CarImage("Aventador SVJ", "Ferrari", "./assets/aventadorSVJ.jpg", 'aventador');
+let AventadorSVJ = new CarImage("Aventador SVJ", "Lamborghini", "./assets/aventadorSVJ.jpg", 'aventador');
 let Divo = new CarImage("Divo", "Bugatti", "./assets/divo.jpg", 'divo');
 let Roadster = new CarImage("Roadster", "Tesla", "./assets/roadster2020.jpg", 'roadster');
 let AstroGlobe = new CarImage("None", "None", "./assets/Globe-New.gif", 'astroglobe');
 
 carImageArray.push(Pista, AventadorSVJ, Divo, Roadster, AstroGlobe);
+};
 
 function randomImage() {
     let randomNumber = Math.floor(Math.random() * carImageArray.length);
     let imageIndex = carImageArray[randomNumber];
     return imageIndex;
+};
+
+function imageClicked (event) {
+    if(event.target.id === firstImage.id){
+        firstImage.clicked += 1;
+    } else if(event.target.id === secondImage.id){
+        secondImage.clicked += 1;
+    } else if(event.target.id === thirdImage.id){
+        thirdImage.clicked += 1;
+    }
+    displayImages();
+    localStorage.setItem('storageCarImgArray', JSON.stringify(carImageArray));
+    displayChart();
 };
 
 let firstImage;
@@ -63,19 +79,4 @@ function displayImages() {
 
 displayImages();
 
-function imageClicked (event) {
-    if(event.target.id === firstImage.id){
-        firstImage.clicked += 1;
-    } else if(event.target.id === secondImage.id){
-        secondImage.clicked += 1;
-    } else if(event.target.id === thirdImage.id){
-        thirdImage.clicked += 1;
-    }
-    displayImages();
-};
 
-// img1.addEventListener('click', imageClicked);
-
-// console.log('first image shown', firstImage.shown);
-// console.log('second image shown', secondImage.shown);
-// console.log('third image shown', thirdImage.shown);
