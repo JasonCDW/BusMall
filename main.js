@@ -3,6 +3,7 @@ let carImageArray = [];
 let elChart = document.getElementById("myChart").getContext('2d');
 let elImageContainer = document.getElementById('image-container');
 
+let totalClicks = 0;
 
 let CarImage = function(modelOfCar, makeOfCar, filePath, id) {
     this.model = modelOfCar;
@@ -16,6 +17,8 @@ let CarImage = function(modelOfCar, makeOfCar, filePath, id) {
 
 if(localStorage.length > 0) {
     let getData = localStorage.getItem('storageCarImgArray');
+    let getTotalClicks = localStorage.getItem('storageTotalClicks');
+    totalClicks = JSON.parse(getTotalClicks);
     carImageArray = JSON.parse(getData);
 } else {
 let Pista = new CarImage("488 Pista", "Ferrari", "./assets/488pista.jpg", 'pista');
@@ -36,14 +39,23 @@ function randomImage() {
 function imageClicked (event) {
     if(event.target.id === firstImage.id){
         firstImage.clicked += 1;
+        totalClicks += 1;
     } else if(event.target.id === secondImage.id){
         secondImage.clicked += 1;
+        totalClicks += 1;
     } else if(event.target.id === thirdImage.id){
         thirdImage.clicked += 1;
+        totalClicks += 1;
     }
     displayImages();
     localStorage.setItem('storageCarImgArray', JSON.stringify(carImageArray));
-    displayChart();
+    localStorage.setItem('storageTotalClicks', JSON.stringify(totalClicks));
+    if(totalClicks > 25){
+        console.log('25 clicks reached.');
+        elImageContainer.innerHTML = '';
+        displayChart();
+    };
+    //displayChart();
 };
 
 let firstImage;
@@ -78,5 +90,4 @@ function displayImages() {
 
 
 displayImages();
-
 
