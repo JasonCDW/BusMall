@@ -12,7 +12,6 @@ let CarImage = function(modelOfCar, makeOfCar, filePath, id) {
     this.id = id;
     this.clicked = 0;
     this.shown = 0;
-    this.addClicks;
 };
 
 if(localStorage.length > 0) {
@@ -50,12 +49,11 @@ function imageClicked (event) {
     displayImages();
     localStorage.setItem('storageCarImgArray', JSON.stringify(carImageArray));
     localStorage.setItem('storageTotalClicks', JSON.stringify(totalClicks));
-    if(totalClicks > 25){
+    if(totalClicks >= 25){
         console.log('25 clicks reached.');
         elImageContainer.innerHTML = '';
         displayChart();
     };
-    //displayChart();
 };
 
 let firstImage;
