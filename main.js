@@ -86,6 +86,8 @@ function displayImages() {
     }
 }
 
-
-displayImages();
-
+if(totalClicks >= 25){
+    displayChart();
+}else{
+    displayImages();
+};
